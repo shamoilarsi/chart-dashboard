@@ -1,0 +1,29 @@
+.dashboardPriceContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.price {
+  font-size: 4rem;
+  font-weight: 500;
+}
+
+.priceCurrency {
+  margin-top: 16px;
+  margin-left: 8px;
+  color: var(--grey);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.priceChange {
+  font-size: 0.9rem;
+}
+
+.colorGreen {
+  color: var(--green);
+}
+
+.colorRed {
+  color: var(--red);
+}
