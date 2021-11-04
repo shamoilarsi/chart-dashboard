@@ -1,15 +1,15 @@
 import "./App.css";
 import Dashboard from "./components/dashboard/dashboard";
 
-import Context from "./context/dashboard";
+import { CoinProvider } from "./context/coin-context";
 
 function App() {
   return (
-    <Context.Provider value={{ coinId: "bitcoin" }}>
+    <CoinProvider>
       <div className="container">
         <Dashboard />
       </div>
-    </Context.Provider>
+    </CoinProvider>
   );
 }
 

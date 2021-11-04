@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import clsx from "clsx";
 
 import styles from "./styles/dashboard.module.css";
-import { getCoinData } from "../../api/coingecko";
+import { getCoinData } from "../../api/coinGecko";
 import Tabs from "./tabs";
 
-import DashboardContext from "../../context/dashboard";
+import { useCoin } from "../../context/coin-context";
 
 function Dashboard() {
-  const { coinId } = useContext(DashboardContext);
+  const { coinId } = useCoin();
 
   const [coin, setCoin] = useState(null);
 
@@ -25,6 +25,7 @@ function Dashboard() {
   }, [coinId]);
 
   const changePositive = Number(coin?.price_change_24h) >= 0;
+  if (!coin) return <div>loading...</div>;
   return (
     <div>
       <div className={styles.dashboardPriceContainer}>

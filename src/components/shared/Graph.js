@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Area,
   YAxis,
@@ -32,25 +32,36 @@ const getDivisions = (days) => {
 };
 
 function Graph({ data, days, width }) {
-  const divisions = getDivisions(days);
-  const multiplier = 100 / divisions;
-
   const [tooltipPayload, setTooltipPayload] = useState(null);
 
-  let gridPoints = [];
-  for (let i = 0; i <= divisions; i++) gridPoints.push(i * multiplier);
-  gridPoints = gridPoints.map((v) => `${v.toFixed(2)}%`);
+  // calculating points for CartesianGrid
+  const memoizedGridPoints = useMemo(() => {
+    const divisions = getDivisions(days);
+    const multiplier = 100 / divisions;
+    let gridPoints = [];
+    for (let i = 0; i <= divisions; i++) {
+      gridPoints.push(i * multiplier);
+    }
+    gridPoints = gridPoints.map((v) => `${v.toFixed(2)}%`);
 
-  const prices = data.map((i) => i.price);
-  const minPrice = Math.min(...prices);
+    return gridPoints;
+  }, [days]);
 
-  const dataWithBar = data.map((i) => ({
-    ...i,
-    barPrice: (i.price - minPrice) * 1.2,
-  }));
+  // adding data for bar chart
+  const memoizedData = useMemo(() => {
+    const prices = data.map((item) => item.price);
+    const minPrice = Math.min(...prices);
+
+    const dataWithBar = data.map((item) => ({
+      ...item,
+      barPrice: (item.price - minPrice) * 1.2,
+    }));
+
+    return dataWithBar;
+  }, [data]);
 
   return (
-    <ComposedChart width={width} height={400} data={dataWithBar}>
+    <ComposedChart width={width} height={400} data={memoizedData}>
       <defs>
         <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.3}></stop>
@@ -75,7 +86,7 @@ function Graph({ data, days, width }) {
       />
       <CartesianGrid
         horizontal={false}
-        verticalPoints={gridPoints}
+        verticalPoints={memoizedGridPoints}
         opacity={0.3}
       />
       {tooltipPayload && (
@@ -133,7 +144,7 @@ function Graph({ data, days, width }) {
         }}
       />
       <YAxis hide yAxisId="barYAxis" dataKey="price" type="number" />
-      {days <= 30 && (
+      {days < 30 && (
         <Bar
           yAxisId="barYAxis"
           dataKey="barPrice"

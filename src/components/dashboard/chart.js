@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOpenInFull, MdOutlineAddCircleOutline } from "react-icons/md";
 import clsx from "clsx";
 
 import styles from "./styles/chart.module.css";
 import IconButton from "../shared/IconButton";
-import { getCoinChartData } from "../../api/coingecko";
+import { getCoinChartData } from "../../api/coinGecko";
 import Graph from "../shared/Graph";
-import DashboardContext from "../../context/dashboard";
+import { useCoin } from "../../context/coin-context";
 
 const useChartRanges = () => {
   return [
@@ -34,7 +34,7 @@ const RangeItem = ({ label, active, onClick }) => {
 function Chart() {
   const WIDTH = 1000;
 
-  const { coinId } = useContext(DashboardContext);
+  const { coinId } = useCoin();
 
   const chartRanges = useChartRanges();
   const [activeDays, setActiveDays] = useState(chartRanges[0].days);

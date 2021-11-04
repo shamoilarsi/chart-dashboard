@@ -5,6 +5,7 @@ const baseUrl = `https://api.coingecko.com/api/v3/coins/`;
  * @param {string} coin id of coin you want chart data for
  * @param {string} days number of days you want the data of
  * @param {string} currency The target currency of market data
+ * @returns {Promise} Promise object contains coin data
  */
 export const getCoinChartData = (coin, days, currency = "usd") => {
   return fetch(
@@ -16,6 +17,12 @@ export const getCoinChartData = (coin, days, currency = "usd") => {
   ).then((res) => res.json());
 };
 
+/**
+ *
+ * @param {string} coin id of coin you want chart data for
+ * @param {string} currency The target currency of market data
+ * @returns {Promise} Promise object contains coin chart data
+ */
 export const getCoinData = (coin, currency = "usd") => {
   return fetch(
     `${baseUrl}markets?vs_currency=${currency}&ids=${coin}&price_change_percentage=24h`,
