@@ -1,7 +1,16 @@
+.tooltipContainer {
+  text-align: end;
+  overflow: visible;
+}
+
 .tooltip {
   background-color: var(--black);
   padding: 6px 12px;
   border-radius: 4px;
   font-weight: 500;
   color: white;
+}
+
+.primaryColor {
+  background-color: var(--primary);
 }

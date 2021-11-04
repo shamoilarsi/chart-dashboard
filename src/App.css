@@ -42,6 +42,11 @@ h6 {
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: var(--black) !important;
 }
+
 .ant-tabs-ink-bar {
   border-bottom: 3px solid var(--primary);
+}
+
+.recharts-surface {
+  overflow: visible !important;
 }
