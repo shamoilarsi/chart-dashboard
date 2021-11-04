@@ -2,7 +2,7 @@
 
 ## Watch the demo
 
-[![Crypto Chart Dashboard Demo](https://img.youtube.com/vi/AiFNjv_QTgI/0.jpg)](https://www.youtube.com/watch?v=AiFNjv_QTgI)
+[![Crypto Chart Dashboard Demo](https://img.youtube.com/vi/zK7Qopr8aug/0.jpg)](https://youtu.be/zK7Qopr8aug)
 
 ## Available Scripts
 
