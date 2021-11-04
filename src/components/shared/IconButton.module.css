@@ -1,0 +1,22 @@
+.container {
+  width: fit-content;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--black2);
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+
+  transition: all ease-out 100ms;
+  cursor: pointer;
+  border: none;
+}
+
+.container:hover {
+  background-color: var(--black2-10);
+}
+
+.label {
+  margin-left: 8px;
+}

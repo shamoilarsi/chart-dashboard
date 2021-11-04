@@ -68,6 +68,7 @@ function Dashboard({ coinId }) {
           {data.price_change_percentage_24h.toFixed(2)}%)
         </span>
       </div>
+      <div className="vertical-spacer" />
       <Tabs />
     </div>
   );

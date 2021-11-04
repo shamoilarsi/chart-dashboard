@@ -1,33 +1,37 @@
 import React from "react";
 import { Tabs as AntdTabs } from "antd";
 import "antd/dist/antd.css";
+import Chart from "./chart";
 
-const useGetDashboardTabs = () => {
+const useDashboardTabs = () => {
   return [
-    { label: "Summary", component: null },
-    { label: "Chart", component: null },
-    { label: "Statistics", component: null },
-    { label: "Analytics", component: null },
-    { label: "Settings", component: null },
+    { label: "Summary", Component: () => null },
+    { label: "Chart", Component: Chart },
+    { label: "Statistics", Component: () => null },
+    { label: "Analytics", Component: () => null },
+    { label: "Settings", Component: () => null },
   ];
 };
 
 function Tabs() {
   const { TabPane } = AntdTabs;
-  const tabs = useGetDashboardTabs();
+  const tabs = useDashboardTabs();
 
   return (
     <div>
       <AntdTabs
         defaultActiveKey="1"
         onChange={() => {}}
-        tabBarStyle={{ color: "#333333", fontFamily: "Poppins" }}
+        tabBarStyle={{ color: "var(--black2)", fontFamily: "Poppins" }}
       >
-        {tabs.map((tab, idx) => (
-          <TabPane tab={tab.label} key={idx}>
-            {tab.component}
-          </TabPane>
-        ))}
+        {tabs.map((tab, idx) => {
+          const { Component, label } = tab;
+          return (
+            <TabPane tab={label} key={label}>
+              <Component />
+            </TabPane>
+          );
+        })}
       </AntdTabs>
     </div>
   );

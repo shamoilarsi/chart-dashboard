@@ -6,6 +6,7 @@
   --primary: #4b40ee;
   --black: #151515;
   --black2: #4e4e4e;
+  --black2-10: #4e4e4e10;
   --grey: #bdbebf;
 }
 
@@ -28,6 +29,14 @@ h4,
 h5,
 h6 {
   font-family: "Poppins", sans-serif;
+}
+
+.horizontal-spacer {
+  margin: 0px 4px;
+}
+
+.vertical-spacer {
+  margin: 16px 0px;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {

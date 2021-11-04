@@ -1,0 +1,23 @@
+.chartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chartOptions {
+  display: flex;
+}
+
+.range {
+  margin: 0px 4px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  color: var(--black2);
+}
+
+.rangeActive {
+  background-color: var(--primary);
+  color: white;
+}
