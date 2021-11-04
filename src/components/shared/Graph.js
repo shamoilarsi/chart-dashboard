@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React, { useState } from "react";
 import {
   Area,
-  ResponsiveContainer,
   YAxis,
   CartesianGrid,
   Tooltip,
@@ -38,82 +37,54 @@ function Graph({ data, days, width }) {
 
   const [tooltipPayload, setTooltipPayload] = useState(null);
 
-  // TODO: make it simpler?
   let gridPoints = [];
   for (let i = 0; i <= divisions; i++) gridPoints.push(i * multiplier);
   gridPoints = gridPoints.map((v) => `${v.toFixed(2)}%`);
 
   const prices = data.map((i) => i.price);
   const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
+
   const dataWithBar = data.map((i) => ({
     ...i,
     barPrice: (i.price - minPrice) * 1.2,
   }));
 
   return (
-    <ResponsiveContainer width={width} height={400}>
-      <ComposedChart data={dataWithBar}>
-        <defs>
-          <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-            <stop
-              offset="0%"
-              stopColor="var(--primary)"
-              stopOpacity={0.3}
-            ></stop>
-            <stop
-              offset="75%"
-              stopColor="var(--primary)"
-              stopOpacity={0.03}
-            ></stop>
-          </linearGradient>
-        </defs>
-        <Area
-          dataKey="price"
-          stroke="var(--primary)"
-          strokeWidth={2}
-          fill="url(#color)"
-        />
-        <YAxis
-          hide
-          dataKey="price"
-          type="number"
-          domain={["dataMin - 1000", "dataMax + 1000"]}
-        />
-        <CartesianGrid
-          horizontal={false}
-          verticalPoints={gridPoints}
-          opacity={0.3}
-        />
-        {tooltipPayload && (
-          <ReferenceLine
-            position="end"
-            strokeDasharray={5}
-            y={tooltipPayload.value}
-            label={(p) => {
-              const { viewBox } = p;
-
-              return (
-                <foreignObject
-                  className={styles.tooltipContainer}
-                  y={viewBox.y - 10}
-                  width={width + 70}
-                  height={100}
-                >
-                  <span className={styles.tooltip}>
-                    {tooltipPayload?.value.toFixed(2)}
-                  </span>
-                </foreignObject>
-              );
-            }}
-          />
-        )}
+    <ComposedChart width={width} height={400} data={dataWithBar}>
+      <defs>
+        <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.3}></stop>
+          <stop
+            offset="75%"
+            stopColor="var(--primary)"
+            stopOpacity={0.03}
+          ></stop>
+        </linearGradient>
+      </defs>
+      <Area
+        dataKey="price"
+        stroke="var(--primary)"
+        strokeWidth={2}
+        fill="url(#color)"
+      />
+      <YAxis
+        hide
+        dataKey="price"
+        type="number"
+        domain={["dataMin - 1000", "dataMax + 1000"]}
+      />
+      <CartesianGrid
+        horizontal={false}
+        verticalPoints={gridPoints}
+        opacity={0.3}
+      />
+      {tooltipPayload && (
         <ReferenceLine
           position="end"
-          strokeWidth={0}
-          y={data?.slice(-1)[0]?.price}
-          label={(props) => {
-            const { viewBox } = props;
+          strokeDasharray={5}
+          y={tooltipPayload.value}
+          label={(p) => {
+            const { viewBox } = p;
 
             return (
               <foreignObject
@@ -122,33 +93,55 @@ function Graph({ data, days, width }) {
                 width={width + 70}
                 height={100}
               >
-                <span className={clsx(styles.tooltip, styles.primaryColor)}>
-                  {data.slice(-1)[0].price.toFixed(2)}
+                <span className={styles.tooltip}>
+                  {tooltipPayload?.value.toFixed(2)}
                 </span>
               </foreignObject>
             );
           }}
         />
-        <Tooltip
-          cursor={{ strokeDasharray: 5, stroke: "var(--black2)" }}
-          content={(props) => {
-            const { active, payload } = props;
-            if (active) {
-              if (payload[0].value !== tooltipPayload?.value)
-                setTooltipPayload(payload[0]);
-            } else setTooltipPayload(null);
-            return null;
-          }}
-        />
-        <YAxis hide yAxisId="barYAxis" dataKey="price" type="number" />
+      )}
+      <ReferenceLine
+        strokeWidth={0}
+        y={data?.slice(-1)[0]?.price}
+        label={(props) => {
+          const { viewBox } = props;
+
+          return (
+            <foreignObject
+              className={styles.tooltipContainer}
+              y={viewBox.y - 10}
+              width={width + 70}
+              height={100}
+            >
+              <span className={clsx(styles.tooltip, styles.primaryColor)}>
+                {data.slice(-1)[0].price.toFixed(2)}
+              </span>
+            </foreignObject>
+          );
+        }}
+      />
+      <Tooltip
+        cursor={{ strokeDasharray: 5, stroke: "var(--black2)" }}
+        content={(props) => {
+          const { active, payload } = props;
+          if (active) {
+            if (payload[0].value !== tooltipPayload?.value)
+              setTooltipPayload(payload[0]);
+          } else setTooltipPayload(null);
+          return null;
+        }}
+      />
+      <YAxis hide yAxisId="barYAxis" dataKey="price" type="number" />
+      {days <= 30 && (
         <Bar
           yAxisId="barYAxis"
           dataKey="barPrice"
           maxBarSize={2}
           fill="var(--grey)"
         />
-      </ComposedChart>
-    </ResponsiveContainer>
+      )}
+    </ComposedChart>
   );
 }
 
