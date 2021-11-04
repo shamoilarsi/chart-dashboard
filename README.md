@@ -1,4 +1,8 @@
-# Cryptocurrency Chart Dashboard 
+# Cryptocurrency Chart Dashboard
+
+## Watch the demo
+
+[![Crypto Chart Dashboard Demo](https://img.youtube.com/vi/AiFNjv_QTgI/0.jpg)](https://www.youtube.com/watch?v=AiFNjv_QTgI)
 
 ## Available Scripts
 
